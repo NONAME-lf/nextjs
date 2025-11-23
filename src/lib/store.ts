@@ -52,25 +52,28 @@ export const useFilterStore = create<FilterState>()(
       clearFilters: () => set({ selectedBrands: [], selectedSellers: [] }),
       setFilters: (brands, sellers) =>
         set({ selectedBrands: brands, selectedSellers: sellers }),
-      saveCurrentFilter: (name) => {
-        const { selectedBrands, selectedSellers, savedFilters } = get();
-        const newFilter: SavedFilter = {
-          id: Date.now().toString(),
-          name,
-          brands: selectedBrands,
-          sellers: selectedSellers,
-        };
-        set({ savedFilters: [...savedFilters, newFilter] });
-      },
-      applySavedFilter: (id) => {
-        const filter = get().savedFilters.find((f) => f.id === id);
-        if (filter) {
-          set({
+      saveCurrentFilter: (name) =>
+        set((state) => {
+          const newFilter: SavedFilter = {
+            id: Date.now().toString(),
+            name,
+            brands: state.selectedBrands,
+            sellers: state.selectedSellers,
+          };
+          return {
+            savedFilters: [...state.savedFilters, newFilter],
+          };
+        }),
+      applySavedFilter: (id) =>
+        set((state) => {
+          const filter = state.savedFilters.find((f) => f.id === id);
+          if (!filter) return state;
+          return {
+            ...state,
             selectedBrands: filter.brands,
             selectedSellers: filter.sellers,
-          });
-        }
-      },
+          };
+        }),
       deleteSavedFilter: (id) =>
         set((state) => ({
           savedFilters: state.savedFilters.filter((f) => f.id !== id),
