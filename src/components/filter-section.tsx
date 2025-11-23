@@ -11,7 +11,6 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { X } from "lucide-react";
 
 export function FilterSection() {
   // Subscribe to filter state and actions
@@ -33,7 +32,6 @@ export function FilterSection() {
             onClick={clearFilters}
             className="w-full cursor-pointer"
           >
-            <X className="size-4 mr-2" />
             Clear all filters
           </Button>
         </SidebarGroup>
