@@ -1,26 +1,52 @@
 "use client";
 
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { PHONE_ITEMS } from "@/contants";
 import { useFilterStore, filterPhoneItems } from "@/lib/store";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function PhonesList() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const selectedBrands = useFilterStore((state) => state.selectedBrands);
   const selectedSellers = useFilterStore((state) => state.selectedSellers);
+  const setFilters = useFilterStore((state) => state.setFilters);
+
+  // sync url on mount
+  useEffect(() => {
+    const brandsParam = searchParams.get("brands");
+    const sellersParam = searchParams.get("sellers");
+
+    if (brandsParam || sellersParam) {
+      const brands = brandsParam ? brandsParam.split(",") : [];
+      const sellers = sellersParam ? sellersParam.split(",") : [];
+      setFilters(brands, sellers);
+    }
+  }, [searchParams]);
+
+  // sync store to url params when filters change
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    if (selectedBrands.length > 0) {
+      params.set("brands", selectedBrands.join(","));
+    }
+    if (selectedSellers.length > 0) {
+      params.set("sellers", selectedSellers.join(","));
+    }
+
+    const newUrl = params.toString() ? `?${params.toString()}` : "/phones";
+    router.replace(newUrl, { scroll: false });
+  }, [selectedBrands, selectedSellers]);
 
   const filteredPhones = useMemo(
     () =>
