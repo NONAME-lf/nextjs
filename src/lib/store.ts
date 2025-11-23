@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 export type PhoneItem = {
+  id: number;
   brand: string;
   model: string;
   color: string;

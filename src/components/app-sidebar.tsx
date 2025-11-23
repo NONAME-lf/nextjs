@@ -1,4 +1,3 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import { FilterSection } from "@/components/filter-section";
 
 import {

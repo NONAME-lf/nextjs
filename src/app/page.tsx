@@ -1,57 +1,26 @@
-"use client";
-
-import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { PHONE_ITEMS } from "@/contants";
-import { useFilterStore, filterPhoneItems } from "@/lib/store";
-import { useMemo } from "react";
+import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
-  const selectedBrands = useFilterStore((state) => state.selectedBrands);
-  const selectedSellers = useFilterStore((state) => state.selectedSellers);
-
-  const filteredPhones = useMemo(
-    () =>
-      filterPhoneItems(PHONE_ITEMS, {
-        selectedBrands,
-        selectedSellers,
-      }),
-    [selectedBrands, selectedSellers]
-  );
-
   return (
-    <ul className="container grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-      {filteredPhones.map((phone, index) => (
-        <li key={index}>
-          <Card className="h-full flex flex-col justify-between">
-            <CardContent className="h-100 p-2">
-              <img
-                className="w-full h-full object-contain"
-                src={phone.image}
-                alt={`${phone.brand} ${phone.model}`}
-              />
-            </CardContent>
-            <CardContent>
-              Мобільний телефон {phone.brand} {phone.model} {phone.color}
-            </CardContent>
-            <CardFooter>Ціна: {phone.price} грн</CardFooter>
-            <CardAction className="px-4 w-full">
-              <Button className="cursor-pointer w-full">Buy</Button>
-            </CardAction>
-          </Card>
-        </li>
-      ))}
-    </ul>
+    <div className="min-h-screen flex items-center justify-center p-8">
+      <div className="max-w-2xl mx-auto text-center space-y-8">
+        <Badge variant="secondary" className="text-lg px-4 py-2">
+          <h1 className="text-5xl font-bold tracking-tight">
+            Каталог телефонів
+          </h1>
+        </Badge>
+        <p className="text-xl text-muted-foreground">
+          Знайдіть ідеальний телефон для себе. Широкий вибір брендів та моделей
+          за найкращими цінами.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="/phones">
+            <Button size="lg">Переглянути телефони →</Button>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
