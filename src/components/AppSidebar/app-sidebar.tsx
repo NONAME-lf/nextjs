@@ -1,4 +1,4 @@
-import { FilterSection } from "@/components/filter-section";
+import { FilterSection } from "../FilterSection/filter-section";
 
 import {
   Sidebar,

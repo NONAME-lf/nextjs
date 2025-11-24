@@ -12,7 +12,7 @@ import { useFilterStore, filterPhoneItems } from "@/lib/store";
 import { useMemo, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { PhoneCardSkeleton } from "@/components/phone-card-skeleton";
+import { PhoneCardSkeleton } from "@/components/CardSkeleton/card-skeleton";
 
 export default function PhonesList() {
   const router = useRouter();

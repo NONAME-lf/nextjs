@@ -4,7 +4,7 @@ import {
   CardFooter,
   CardAction,
 } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 
 export function PhoneCardSkeleton() {
   return (
